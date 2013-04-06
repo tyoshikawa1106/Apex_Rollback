@@ -1,5 +1,5 @@
 /*
- * ロールバックサンプル・コントローラークラス
+ * ロールバックサンプル
  * © 2013 Force.com Developer
  * ----------------------------------------
  * @createdDate      : 2013/01/01
@@ -11,8 +11,8 @@
  */
 public with sharing class RollbackSampleController {
 	
-	public Account objAccount {get; set;}
-	public Opportunity objOpportunity {get; set;}
+	public Account account {get; set;}
+	public Opportunity opportunity {get; set;}
 	public String opportunityName {get; set;}
 	
 	/*
@@ -23,10 +23,10 @@ public with sharing class RollbackSampleController {
 	public RollbackSampleController() {
 		System.debug('◆◆◆◆RollbackSampleController:START');
 		
-		this.objAccount = new Account(
+		this.account = new Account(
 							Name='Account Name'
 						);
-		this.objOpportunity = new Opportunity();
+		this.opportunity = new Opportunity();
 		this.opportunityName = '';
 		
 		System.debug('◆◆◆◆RollbackSampleController:END');
@@ -42,17 +42,17 @@ public with sharing class RollbackSampleController {
 		
 		Savepoint sp = Database.setSavepoint();
 		
-		Account upsertAccount = this.objAccount.clone(true, false, true, true);
+		Account upsertAccount = this.account.clone(true, true, true, true);
         upsert upsertAccount;
         
-        this.objOpportunity = getOpportunity(upsertAccount,opportunityName);
-        if (String.isEmpty(this.objOpportunity.Name) == true) {
+        this.opportunity = getOpportunity(upsertAccount,opportunityName);
+        if (String.isEmpty(this.opportunity.Name) == true) {
         	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, 'Not Opportunity Name!!'));
         	Database.rollback(sp);
         	return;
         }
         
-        upsert this.objOpportunity;
+        upsert this.opportunity;
         
         ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Save!!'));
 		
