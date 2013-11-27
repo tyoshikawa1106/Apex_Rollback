@@ -1,5 +1,5 @@
 <apex:page Controller="RollbackSampleController" title="Rollback Sample" showHeader="true" sidebar="false" tabStyle="Account" id="page">
-    <apex:sectionHeader title="Forc.com" subTitle="Rollback Sample" />
+    <apex:sectionHeader title="Force.com" subTitle="Rollback Sample" />
     <apex:form id="form">
         <apex:pageBlock >
             <apex:pageMessages />
